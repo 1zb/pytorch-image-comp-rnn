@@ -1,0 +1,6 @@
+*.pth
+*.pyc
+*.bak
+*.png
+*.jpg
+*.npz
