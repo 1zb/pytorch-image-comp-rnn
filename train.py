@@ -6,6 +6,7 @@ import numpy as np
 
 import torch
 import torch.optim as optim
+import torch.optim.lr_scheduler as LS
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
@@ -23,6 +24,7 @@ parser.add_argument('--lr', type=float, default=0.0001, help='learning rate')
 # parser.add_argument('--cuda', '-g', action='store_true', help='enables cuda')
 parser.add_argument(
     '--iterations', type=int, default=16, help='unroll iterations')
+parser.add_argument('--checkpoint', type=int, help='unroll iterations')
 args = parser.parse_args()
 
 ## load 32x32 patches from images
@@ -99,7 +101,18 @@ def save(index, epoch=True):
 
 # resume()
 
-for epoch in range(1, args.max_epochs + 1):
+scheduler = LS.MultiStepLR(solver, milestones=[3, 10, 20], gamma=0.5)
+
+last_epoch = 0
+if args.checkpoint:
+    resume(args.checkpoint)
+    last_epoch = args.checkpoint
+    scheduler.last_epoch = last_epoch - 1
+
+for epoch in range(last_epoch + 1, args.max_epochs + 1):
+
+    scheduler.step()
+
     for batch, data in enumerate(train_loader):
         batch_t0 = time.time()
 
