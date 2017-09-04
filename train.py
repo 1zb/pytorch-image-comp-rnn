@@ -156,6 +156,8 @@ for epoch in range(1, args.max_epochs + 1):
             format(epoch, batch + 1,
                    len(train_loader), loss.data[0], bp_t1 - bp_t0, batch_t1 -
                    batch_t0))
+        print(('{:.4f} ' * args.iterations +
+               '\n').format(* [l.data[0] for l in losses]))
 
         index = (epoch - 1) * len(train_loader) + batch
 

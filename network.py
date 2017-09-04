@@ -11,11 +11,11 @@ class EncoderCell(nn.Module):
         super(EncoderCell, self).__init__()
 
         self.conv = nn.Conv2d(
-            3, 64, kernel_size=4, stride=2, padding=1, bias=False)
+            3, 64, kernel_size=3, stride=2, padding=1, bias=False)
         self.rnn1 = ConvLSTMCell(
             64,
             256,
-            kernel_size=4,
+            kernel_size=3,
             stride=2,
             padding=1,
             hidden_kernel_size=1,
@@ -23,7 +23,7 @@ class EncoderCell(nn.Module):
         self.rnn2 = ConvLSTMCell(
             256,
             512,
-            kernel_size=4,
+            kernel_size=3,
             stride=2,
             padding=1,
             hidden_kernel_size=1,
@@ -31,7 +31,7 @@ class EncoderCell(nn.Module):
         self.rnn3 = ConvLSTMCell(
             512,
             512,
-            kernel_size=4,
+            kernel_size=3,
             stride=2,
             padding=1,
             hidden_kernel_size=1,
