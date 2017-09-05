@@ -30,10 +30,28 @@ This will output images of different quality levels.
 bash test/get_kodak.sh
 ```
 
-### Demo
+### Encode and decode with RNN model
 ```bash
 bash test/enc_dec.sh
 ```
+
+### Encode and decode with JPEG (use `convert` from ImageMagick)
+```bash
+bash test/jpeg.sh
+```
+
+### Calculate SSIM
+```bash
+bash test/calc_ssim.sh
+```
+
+### Draw rate-distortion curve
+```bash
+bash test/draw_rd.py
+```
+
+## Result
+![Rate-distortion](rd.png)
 
 ## Official Repo
 https://github.com/tensorflow/models/tree/master/compression

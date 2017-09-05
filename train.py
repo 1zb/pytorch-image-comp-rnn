@@ -19,8 +19,8 @@ parser.add_argument(
 parser.add_argument(
     '--train', '-f', required=True, type=str, help='folder of training images')
 parser.add_argument(
-    '--max-epochs', '-e', type=int, default=100, help='max epochs')
-parser.add_argument('--lr', type=float, default=0.0001, help='learning rate')
+    '--max-epochs', '-e', type=int, default=200, help='max epochs')
+parser.add_argument('--lr', type=float, default=0.0005, help='learning rate')
 # parser.add_argument('--cuda', '-g', action='store_true', help='enables cuda')
 parser.add_argument(
     '--iterations', type=int, default=16, help='unroll iterations')
@@ -101,7 +101,7 @@ def save(index, epoch=True):
 
 # resume()
 
-scheduler = LS.MultiStepLR(solver, milestones=[3, 10, 20], gamma=0.5)
+scheduler = LS.MultiStepLR(solver, milestones=[3, 10, 20, 50, 100], gamma=0.5)
 
 last_epoch = 0
 if args.checkpoint:

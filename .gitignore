@@ -4,3 +4,4 @@
 *.png
 *.jpg
 *.npz
+!rd.png
