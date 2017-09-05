@@ -56,5 +56,14 @@ LSTM (Additive Reconstruction)
 
 ![Rate-distortion](rd.png)
 
+## What's inside
+- `train.py`: Main program for training.
+- `encoder.py` and `decoder.py`: Encoder and decoder.
+- `dataset.py`: Utils for reading images.
+- `metric.py`: Functions for Calculatnig MS-SSIM and PSNR.
+- `network.py`: Modules of encoder and decoder.
+- `modules/conv_rnn.py`: ConvLSTM module.
+- `functions/sign.py`: Forward and backward for binary quantization.
+
 ## Official Repo
 https://github.com/tensorflow/models/tree/master/compression
