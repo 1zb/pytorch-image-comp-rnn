@@ -51,7 +51,7 @@ bash test/draw_rd.py
 ```
 
 ## Result
-LSTM (Additive Reconstruction)
+LSTM (Additive Reconstruction), before entropy coding
 
 ### Rate-distortion
 ![Rate-distortion](rd.png)
