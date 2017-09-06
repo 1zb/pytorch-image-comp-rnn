@@ -53,8 +53,32 @@ bash test/draw_rd.py
 ## Result
 LSTM (Additive Reconstruction)
 
-
+### Rate-distortion
 ![Rate-distortion](rd.png)
+
+### `kodim10.png`
+
+Original Image
+
+![Original Image](kodim10.png)
+
+Below Left: LSTM, SSIM=0.865, bpp=0.125
+
+Below Right: JPEG, SSIM=0.827, bpp=0.133
+
+![bpp-0.125-0.133-ssim-0.865-0.827](bpp-0.125-0.133-ssim-0.865-0.827.png)
+
+Below Left: LSTM, SSIM=0.937, bpp=0.250
+
+Below Right: JPEG, SSIM=0.918, bpp=0.249
+
+![bpp-0.250-0.249-ssim-0.937-0.918](bpp-0.250-0.249-ssim-0.937-0.918.png)
+
+Below Left: LSTM, SSIM=0.963, bpp=0.375
+
+Below Right: JPEG, SSIM=0.951, bpp=0.381
+
+![bpp-0.375-0.381-ssim-0.963-0.951](bpp-0.375-0.381-ssim-0.963-0.951.png)
 
 ## What's inside
 - `train.py`: Main program for training.

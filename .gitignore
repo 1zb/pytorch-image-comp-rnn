@@ -5,3 +5,4 @@
 *.jpg
 *.npz
 !rd.png
+!/kodim10.png
