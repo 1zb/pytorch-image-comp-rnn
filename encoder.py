@@ -33,6 +33,10 @@ encoder = network.EncoderCell()
 binarizer = network.Binarizer()
 decoder = network.DecoderCell()
 
+encoder.eval()
+binarizer.eval()
+decoder.eval()
+
 encoder.load_state_dict(torch.load(args.model))
 binarizer.load_state_dict(
     torch.load(args.model.replace('encoder', 'binarizer')))

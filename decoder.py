@@ -30,6 +30,7 @@ codes = Variable(codes, volatile=True)
 import network
 
 decoder = network.DecoderCell()
+decoder.eval()
 
 decoder.load_state_dict(torch.load(args.model))
 

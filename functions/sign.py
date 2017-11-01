@@ -2,11 +2,6 @@ import torch
 from torch.autograd import Function
 
 
-def sign(input):
-    func = Sign()
-    return func(input)
-
-
 class Sign(Function):
     """
     Variable Rate Image Compression with Recurrent Neural Networks
@@ -16,12 +11,18 @@ class Sign(Function):
     def __init__(self):
         super(Sign, self).__init__()
 
-    def forward(self, input):
-        prob = input.new(input.size()).uniform_()
-        x = input.clone()
-        x[(1 - input) / 2 <= prob] = 1
-        x[(1 - input) / 2 > prob] = -1
-        return x
+    @staticmethod
+    def forward(ctx, input, is_training=True):
+        # Apply quantization noise while only training
+        if is_training:
+            prob = input.new(input.size()).uniform_()
+            x = input.clone()
+            x[(1 - input) / 2 <= prob] = 1
+            x[(1 - input) / 2 > prob] = -1
+            return x
+        else:
+            return input.sign()
 
-    def backward(self, grad_output):
+    @staticmethod
+    def backward(ctx, grad_output):
         return grad_output

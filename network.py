@@ -2,8 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from modules import ConvLSTMCell
-from functions import sign
+from modules import ConvLSTMCell, Sign
 
 
 class EncoderCell(nn.Module):
@@ -56,11 +55,12 @@ class Binarizer(nn.Module):
     def __init__(self):
         super(Binarizer, self).__init__()
         self.conv = nn.Conv2d(512, 32, kernel_size=1, bias=False)
+        self.sign = Sign()
 
     def forward(self, input):
         feat = self.conv(input)
         x = F.tanh(feat)
-        return sign(x)
+        return self.sign(x)
 
 
 class DecoderCell(nn.Module):
