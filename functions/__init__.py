@@ -1,1 +1,1 @@
-from .sign import sign
+from .sign import Sign

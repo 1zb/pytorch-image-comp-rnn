@@ -47,7 +47,7 @@ bash test/calc_ssim.sh
 
 ### Draw rate-distortion curve
 ```bash
-bash test/draw_rd.py
+python test/draw_rd.py
 ```
 
 ## Result
