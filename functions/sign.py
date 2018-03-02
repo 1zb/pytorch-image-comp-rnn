@@ -25,4 +25,4 @@ class Sign(Function):
 
     @staticmethod
     def backward(ctx, grad_output):
-        return grad_output
+        return grad_output, None
