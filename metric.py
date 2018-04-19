@@ -196,9 +196,9 @@ def MultiScaleSSIM(img1,
 
 def msssim(original, compared):
     if isinstance(original, str):
-        original = np.array(Image.open(original).convert('RGB'))
+        original = np.array(Image.open(original).convert('RGB'), dtype=np.float32)
     if isinstance(compared, str):
-        compared = np.array(Image.open(compared).convert('RGB'))
+        compared = np.array(Image.open(compared).convert('RGB'), dtype=np.float32)
 
     original = original[None, ...] if original.ndim == 3 else original
     compared = compared[None, ...] if compared.ndim == 3 else compared
@@ -208,9 +208,9 @@ def msssim(original, compared):
 
 def psnr(original, compared):
     if isinstance(original, str):
-        original = np.array(Image.open(original).convert('RGB'))
+        original = np.array(Image.open(original).convert('RGB'), dtype=np.float32)
     if isinstance(compared, str):
-        compared = np.array(Image.open(compared).convert('RGB'))
+        compared = np.array(Image.open(compared).convert('RGB'), dtype=np.float32)
 
     mse = np.mean(np.square(original - compared))
     psnr = np.clip(
