@@ -9,8 +9,7 @@ class EncoderCell(nn.Module):
     def __init__(self):
         super(EncoderCell, self).__init__()
 
-        self.conv = nn.Conv2d(
-            3, 64, kernel_size=3, stride=2, padding=1, bias=False)
+        self.conv = nn.Conv2d(3, 64, kernel_size=3, stride=2, padding=1, bias=False)
         self.rnn1 = ConvLSTMCell(
             64,
             256,
@@ -18,7 +17,8 @@ class EncoderCell(nn.Module):
             stride=2,
             padding=1,
             hidden_kernel_size=1,
-            bias=False)
+            bias=False,
+        )
         self.rnn2 = ConvLSTMCell(
             256,
             512,
@@ -26,7 +26,8 @@ class EncoderCell(nn.Module):
             stride=2,
             padding=1,
             hidden_kernel_size=1,
-            bias=False)
+            bias=False,
+        )
         self.rnn3 = ConvLSTMCell(
             512,
             512,
@@ -34,7 +35,8 @@ class EncoderCell(nn.Module):
             stride=2,
             padding=1,
             hidden_kernel_size=1,
-            bias=False)
+            bias=False,
+        )
 
     def forward(self, input, hidden1, hidden2, hidden3):
         x = self.conv(input)
@@ -59,7 +61,7 @@ class Binarizer(nn.Module):
 
     def forward(self, input):
         feat = self.conv(input)
-        x = F.tanh(feat)
+        x = torch.tanh(feat)
         return self.sign(x)
 
 
@@ -67,8 +69,7 @@ class DecoderCell(nn.Module):
     def __init__(self):
         super(DecoderCell, self).__init__()
 
-        self.conv1 = nn.Conv2d(
-            32, 512, kernel_size=1, stride=1, padding=0, bias=False)
+        self.conv1 = nn.Conv2d(32, 512, kernel_size=1, stride=1, padding=0, bias=False)
         self.rnn1 = ConvLSTMCell(
             512,
             512,
@@ -76,7 +77,8 @@ class DecoderCell(nn.Module):
             stride=1,
             padding=1,
             hidden_kernel_size=1,
-            bias=False)
+            bias=False,
+        )
         self.rnn2 = ConvLSTMCell(
             128,
             512,
@@ -84,7 +86,8 @@ class DecoderCell(nn.Module):
             stride=1,
             padding=1,
             hidden_kernel_size=1,
-            bias=False)
+            bias=False,
+        )
         self.rnn3 = ConvLSTMCell(
             128,
             256,
@@ -92,7 +95,8 @@ class DecoderCell(nn.Module):
             stride=1,
             padding=1,
             hidden_kernel_size=3,
-            bias=False)
+            bias=False,
+        )
         self.rnn4 = ConvLSTMCell(
             64,
             128,
@@ -100,9 +104,9 @@ class DecoderCell(nn.Module):
             stride=1,
             padding=1,
             hidden_kernel_size=3,
-            bias=False)
-        self.conv2 = nn.Conv2d(
-            32, 3, kernel_size=1, stride=1, padding=0, bias=False)
+            bias=False,
+        )
+        self.conv2 = nn.Conv2d(32, 3, kernel_size=1, stride=1, padding=0, bias=False)
 
     def forward(self, input, hidden1, hidden2, hidden3, hidden4):
         x = self.conv1(input)
@@ -123,5 +127,5 @@ class DecoderCell(nn.Module):
         x = hidden4[0]
         x = F.pixel_shuffle(x, 2)
 
-        x = F.tanh(self.conv2(x)) / 2
+        x = torch.tanh(self.conv2(x)) / 2
         return x, hidden1, hidden2, hidden3, hidden4

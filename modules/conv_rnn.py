@@ -8,27 +8,30 @@ from torch.nn.modules.utils import _pair
 class ConvRNNCellBase(nn.Module):
     def __repr__(self):
         s = (
-            '{name}({input_channels}, {hidden_channels}, kernel_size={kernel_size}'
-            ', stride={stride}')
-        if self.padding != (0, ) * len(self.padding):
-            s += ', padding={padding}'
-        if self.dilation != (1, ) * len(self.dilation):
-            s += ', dilation={dilation}'
-        s += ', hidden_kernel_size={hidden_kernel_size}'
-        s += ')'
+            "{name}({input_channels}, {hidden_channels}, kernel_size={kernel_size}"
+            ", stride={stride}"
+        )
+        if self.padding != (0,) * len(self.padding):
+            s += ", padding={padding}"
+        if self.dilation != (1,) * len(self.dilation):
+            s += ", dilation={dilation}"
+        s += ", hidden_kernel_size={hidden_kernel_size}"
+        s += ")"
         return s.format(name=self.__class__.__name__, **self.__dict__)
 
 
 class ConvLSTMCell(ConvRNNCellBase):
-    def __init__(self,
-                 input_channels,
-                 hidden_channels,
-                 kernel_size=3,
-                 stride=1,
-                 padding=0,
-                 dilation=1,
-                 hidden_kernel_size=1,
-                 bias=True):
+    def __init__(
+        self,
+        input_channels,
+        hidden_channels,
+        kernel_size=3,
+        stride=1,
+        padding=0,
+        dilation=1,
+        hidden_kernel_size=1,
+        bias=True,
+    ):
         super(ConvLSTMCell, self).__init__()
         self.input_channels = input_channels
         self.hidden_channels = hidden_channels
@@ -50,7 +53,8 @@ class ConvLSTMCell(ConvRNNCellBase):
             stride=self.stride,
             padding=self.padding,
             dilation=self.dilation,
-            bias=bias)
+            bias=bias,
+        )
 
         self.conv_hh = nn.Conv2d(
             in_channels=self.hidden_channels,
@@ -59,7 +63,8 @@ class ConvLSTMCell(ConvRNNCellBase):
             stride=1,
             padding=hidden_padding,
             dilation=1,
-            bias=bias)
+            bias=bias,
+        )
 
         self.reset_parameters()
 
@@ -73,12 +78,12 @@ class ConvLSTMCell(ConvRNNCellBase):
 
         ingate, forgetgate, cellgate, outgate = gates.chunk(4, 1)
 
-        ingate = F.sigmoid(ingate)
-        forgetgate = F.sigmoid(forgetgate)
-        cellgate = F.tanh(cellgate)
-        outgate = F.sigmoid(outgate)
+        ingate = torch.sigmoid(ingate)
+        forgetgate = torch.sigmoid(forgetgate)
+        cellgate = torch.tanh(cellgate)
+        outgate = torch.sigmoid(outgate)
 
         cy = (forgetgate * cx) + (ingate * cellgate)
-        hy = outgate * F.tanh(cy)
+        hy = outgate * torch.tanh(cy)
 
         return hy, cy

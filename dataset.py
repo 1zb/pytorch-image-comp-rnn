@@ -9,16 +9,16 @@ import torch.utils.data as data
 from PIL import Image
 
 IMG_EXTENSIONS = [
-    '.jpg',
-    '.JPG',
-    '.jpeg',
-    '.JPEG',
-    '.png',
-    '.PNG',
-    '.ppm',
-    '.PPM',
-    '.bmp',
-    '.BMP',
+    ".jpg",
+    ".JPG",
+    ".jpeg",
+    ".JPEG",
+    ".png",
+    ".PNG",
+    ".ppm",
+    ".PPM",
+    ".bmp",
+    ".BMP",
 ]
 
 
@@ -27,17 +27,17 @@ def is_image_file(filename):
 
 
 def default_loader(path):
-    return Image.open(path).convert('RGB')
+    return Image.open(path).convert("RGB")
 
 
 class ImageFolder(data.Dataset):
-    """ ImageFolder can be used to load images where there are no labels."""
+    """ImageFolder can be used to load images where there are no labels."""
 
     def __init__(self, root, transform=None, loader=default_loader):
         images = []
         for filename in os.listdir(root):
             if is_image_file(filename):
-                images.append('{}'.format(filename))
+                images.append("{}".format(filename))
 
         self.root = root
         self.imgs = images
